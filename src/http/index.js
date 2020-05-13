@@ -51,10 +51,12 @@ service.interceptors.response.use(
         if (err.response.status === 404) {
             // 提示接口路径出错
             Message.error('接口路径出错')
+            router.push("/404")
         }
         if (err.response.status === 500) {
             // 提示服务器出错
             Message.error('服务器出错')
+            router.push("/500")
         }
         if (err.response.status === 503) {
             // 提示服务器维护

@@ -13,14 +13,18 @@ import IntroJs from 'intro.js'
 import 'intro.js/introjs.css';
 import echarts from 'echarts'
 import VCharts from 'v-charts'
+import lodash from 'lodash'
+import Print from 'vue-print-nb'
 
 
 
 
+Vue.use(Print);
 Vue.use(IntroJs);
 Vue.use(ElementUI)
 Vue.use(VCharts)
 Vue.prototype.$dayjs = dayjs
+Vue.prototype.$lodash = dayjs
 Vue.config.productionTip = false
 
 new Vue({

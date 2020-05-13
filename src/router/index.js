@@ -89,6 +89,17 @@ const routes = [{
                     parentName: 'form',
                 }
             },
+            {
+                path: '/form/checkForm',
+                name: "checkForm",
+                component: () =>
+                    import ( /* webpackChunkName: "about" */ '../pages/form/CheckForm'),
+                meta: {
+                    title: '账单详情',
+                    enName: "checkForm",
+                    parentName: 'form',
+                }
+            },
         ],
     },
     {
@@ -132,7 +143,34 @@ const routes = [{
         meta: {
             title: '锁屏中'
         },
-    }
+    },
+    {
+        path: "/403",
+        name: "403",
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../pages/err/403'),
+        meta: {
+            title: '403'
+        },
+    },
+    {
+        path: "/500",
+        name: "500",
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../pages/err/500'),
+        meta: {
+            title: '500'
+        },
+    },
+    {
+        path: "*",
+        name: "404",
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../pages/err/404'),
+        meta: {
+            title: '404'
+        },
+    },
 ]
 
 const isPro = process.env.NODE_ENV === 'production'

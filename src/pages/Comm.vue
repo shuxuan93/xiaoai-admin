@@ -169,6 +169,8 @@ export default {
   .content {
     flex: 1;
     padding: 0 20px;
+    overflow: hidden;
+    overflow-y: auto;
     .breadcrumb {
       padding: 20px 0;
     }

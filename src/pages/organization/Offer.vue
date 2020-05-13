@@ -23,7 +23,12 @@
       <el-card class="box-card">
         <div class="c-btn flex a-center">
           <div class="btn">
-            <el-button type="primary" size="mini">待发offer (14)</el-button>
+            <el-button
+              type="primary"
+              size="mini"
+              v-for="(item,index) in statusList"
+              :key="index"
+            >{{item}}offer ({{getStatusNum(index)}})</el-button>
           </div>
           <div class="btn">
             <el-button type="primary" size="mini">已发offer (25)</el-button>
@@ -44,9 +49,11 @@
           :data="tableData"
           tooltip-effect="dark"
           :row-style="rowStyle"
+          style="width: 100%"
         >
           <el-table-column type="selection" width="55" align="center"></el-table-column>
           <template v-for="(item,index) in filterProps">
+            {{item.label}}
             <el-table-column
               align="center"
               :label="item.label"
@@ -58,63 +65,75 @@
                 <!-- {{ scope.row[item.prop] }} -->
                 <span v-if="item.prop==='education'">{{educationList[scope.row[item.prop]] }}</span>
                 <span v-else-if="item.prop==='marriage'">{{getMarriage(scope.row[item.prop]) }}</span>
+                <span v-else-if="item.prop==='status'">{{statusList[scope.row[item.prop]] }}</span>
+                <span v-else-if="item.prop==='gender'">{{genderList[scope.row[item.prop]] }}</span>
+                <span
+                  v-else-if="item.prop==='nativePlace'"
+                >{{getNativePlace(scope.row[item.prop]) }}</span>
               </template>
             </el-table-column>
           </template>
-          <el-table-column fixed="right" align="center" width="55">
+          <el-table-column align="center" width="55">
             <template slot="header" slot-scope="scope">
-              <el-popover placement="bottom" width="200" trigger="click">
-                <div class="popover">
-                  <div class="top flex a-center j-between">
-                    <el-popover ref="popovertrue" placement="right" width="176" trigger="click">
-                      <div class="field">
-                        <div class="field-item">
-                          <el-checkbox-group v-model="addField">
-                            <el-checkbox
-                              v-for="(item,index) in getAddField(false)"
-                              :label="item.label"
-                              :key="index"
-                            >{{item.label}}</el-checkbox>
-                          </el-checkbox-group>
+              <div>
+                <el-popover v-model="visible0" placement="bottom" width="200" trigger="click">
+                  <div class="popoverss">
+                    <div class="top flex a-center j-between">
+                      <el-popover v-model="visible1" placement="right" width="176" trigger="click">
+                        <div class="field">
+                          <div class="field-item">
+                            <el-checkbox-group v-model="addField">
+                              <el-checkbox
+                                v-for="(item,index) in getAddField(false)"
+                                :label="item.label"
+                                :key="index"
+                              >{{item.label}}</el-checkbox>
+                            </el-checkbox-group>
+                          </div>
+                          <div class="btn flex j-end">
+                            <el-button
+                              type="primary"
+                              size="mini"
+                              v-popover:popover1
+                              @click="sureAdd(true)"
+                            >确定</el-button>
+                          </div>
                         </div>
-                        <div class="btn flex j-end">
-                          <el-button type="primary" size="mini" @click="sureAdd(true)">确定</el-button>
+                        <div slot="reference">添加显示字段</div>
+                      </el-popover>
+                      <el-popover v-model="visible2" placement="right" width="176" trigger="click">
+                        <div class="field">
+                          <div class="field-item">
+                            <el-checkbox-group v-model="delField">
+                              <el-checkbox
+                                v-for="(item,index) in getAddField(true)"
+                                :label="item.label"
+                                :key="index"
+                              >{{item.label}}</el-checkbox>
+                            </el-checkbox-group>
+                          </div>
+                          <div class="btn flex j-end">
+                            <el-button type="primary" size="mini" @click="sureAdd(false)">确定</el-button>
+                          </div>
                         </div>
+                        <span slot="reference" v-popover:popover2>删除显示字段</span>
+                      </el-popover>
+                    </div>
+                    <div class="content">
+                      <div class="title">选择间距类型</div>
+                      <div class="flex a-center j-around">
+                        <span
+                          :class="{'space-active':spaceActive===index}"
+                          v-for="(item,index) in spaceList"
+                          :key="index"
+                          @click="changeSpace(index)"
+                        >{{item}}</span>
                       </div>
-                      <span slot="reference">添加显示字段</span>
-                    </el-popover>
-                    <el-popover :value="visible2" placement="right" width="176" trigger="click">
-                      <div class="field">
-                        <div class="field-item">
-                          <el-checkbox-group v-model="delField">
-                            <el-checkbox
-                              v-for="(item,index) in getAddField(true)"
-                              :label="item.label"
-                              :key="index"
-                            >{{item.label}}</el-checkbox>
-                          </el-checkbox-group>
-                        </div>
-                        <div class="btn flex j-end">
-                          <el-button type="primary" size="mini" @click="sureAdd(false)">确定</el-button>
-                        </div>
-                      </div>
-                      <span slot="reference">删除显示字段</span>
-                    </el-popover>
-                  </div>
-                  <div class="content">
-                    <div class="title">选择间距类型</div>
-                    <div class="flex a-center j-around">
-                      <span
-                        :class="{'space-active':spaceActive===index}"
-                        v-for="(item,index) in spaceList"
-                        :key="index"
-                        @click="changeSpace(index)"
-                      >{{item}}</span>
                     </div>
                   </div>
-                </div>
-                <span slot="reference" class="el-icon-setting" @click="visible0=true"></span>
-              </el-popover>
+                  <span slot="reference" class="el-icon-setting"></span>
+                </el-popover>
+              </div>
             </template>
           </el-table-column>
         </el-table>
@@ -123,7 +142,7 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="page"
-            :page-size="100"
+            :page-size="10"
             layout="total, sizes, prev, pager, next, jumper"
             :total="total"
           ></el-pagination>
@@ -170,7 +189,6 @@ export default {
         { label: "性别", prop: "gender", isShow: false, isProp: false },
         { label: "职位", prop: "position", isShow: false, isProp: true },
         { label: "offer状态", prop: "status", isShow: false, isProp: false },
-        { label: "职位", prop: "position", isShow: false, isProp: true },
         { label: "出生日期", prop: "birthday", isShow: false, isProp: true },
         { label: "籍贯", prop: "nativePlace", isShow: false, isProp: false }
       ],
@@ -191,9 +209,12 @@ export default {
       rowStyle: { height: "60px" },
       addField: [],
       delField: [],
-      visible0: true,
+      visible0: false,
       visible1: false,
-      visible2: false
+      visible2: false,
+      filterProps: [],
+      statusList: ["待发", "已发", "已接受", "已拒绝", "已入职"],
+      genderList: ["男", "女"]
     };
   },
   components: {},
@@ -210,9 +231,9 @@ export default {
     // 获取婚姻状况
     getMarriage(index) {
       if (index) {
-        return "男";
+        return "已婚";
       } else {
-        return "女";
+        return "未婚";
       }
     },
     // 切换间距
@@ -228,19 +249,25 @@ export default {
         }
       }
     },
+    // 处理籍贯
+    getNativePlace(item) {
+      return item.replace(/\"/g, "");
+    },
     // 获取可添加字段
     getAddField(flage) {
       return this.tableProps.filter(item => item.isShow === flage);
     },
     // 确认添加
     sureAdd(flage) {
-      this.$refs.popovertrue.doClose();
       let arr = this.addField;
       if (!flage) {
-        let arr = this.delField;
+        arr = this.delField;
         this.visible2 = false;
       } else {
         this.visible1 = false;
+      }
+      if (!this.visible1 && !this.visible2) {
+        this.visible0 = false;
       }
       arr.map(item => {
         this.tableProps.map(items => {
@@ -250,13 +277,25 @@ export default {
           return;
         });
       });
+      localStorage.setItem("tableProps", JSON.stringify(this.tableProps));
+      this.getFilterProps();
       this.addField = [];
       this.delField = [];
+    },
+    getFilterProps() {
+      this.filterProps = this.tableProps.filter(item => item.isShow);
+    },
+    getStatusNum(index) {
+      return this.offer.filter(item => item.status === index).length;
     }
   },
   mounted() {},
   beforeMount() {
     this.getOffer();
+    if (localStorage.getItem("tableProps")) {
+      this.tableProps = JSON.parse(localStorage.getItem("tableProps"));
+    }
+    this.getFilterProps();
   },
   watch: {},
   computed: {
@@ -269,9 +308,6 @@ export default {
     },
     total() {
       return this.offer.length;
-    },
-    filterProps() {
-      return this.tableProps.filter(item => item.isShow);
     }
   }
 };
@@ -303,9 +339,13 @@ export default {
   overflow: hidden;
   ::v-deep .el-table .cell {
     white-space: nowrap;
+    min-width: 50px !important;
+  }
+  ::v-deep .el-table__body-wrapper {
+    position: relative;
   }
 }
-.popover {
+.popoverss {
   .top {
     font-size: 12px;
     cursor: pointer;
