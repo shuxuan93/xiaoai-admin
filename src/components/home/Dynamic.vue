@@ -10,34 +10,41 @@
         >{{$t(`commons.addDynamic`)}}</el-button>
       </div>
       <div class="content">
-        <div>
-          <el-date-picker
-            v-model="datePicker"
-            type="date"
-            placeholder="选择日期"
-            :picker-options="endDatePicker"
-            @change="changeData"
-          ></el-date-picker>
-        </div>
-        <div class="noThing" v-if="dynamicList.length===0">{{$t(`commons.noDynamic`)}}</div>
-        <div v-else>
-          <div class="content-item" v-for="(item,index) in dynamicList" :key="index">
-            <div class="name flex a-center j-between">
-              <div>类型：{{item.username}}</div>
-              <div>发布人：{{item.classification}}</div>
-            </div>
-            <div class="report flex" v-if="item.reportUsers.length>0">
-              <span>汇报人：</span>
-              <el-tooltip :content="item.reportUsers.join(' ')" placement="bottom" effect="light">
-                <span>{{item.reportUsers.join(' ')}}</span>
-              </el-tooltip>
-            </div>
-            <div class="t-name flex a-center j-between">
-              <div class="text">{{item.dynamic}}</div>
-              <div class="time">发布于{{getTime(item.date)}}</div>
+        <el-scrollbar style="height:100%">
+          <div>
+            <el-date-picker
+              v-model="datePicker"
+              type="date"
+              placeholder="选择日期"
+              :picker-options="endDatePicker"
+              @change="changeData"
+            ></el-date-picker>
+          </div>
+          <div class="noThing" v-if="dynamicList.length===0">{{$t(`commons.noDynamic`)}}</div>
+          <div v-else>
+            <div
+              class="content-item"
+              :class="{'back':index%2===0}"
+              v-for="(item,index) in dynamicList"
+              :key="index"
+            >
+              <div class="name flex a-center j-between">
+                <div>类型：{{item.username}}</div>
+                <div>发布人：{{item.classification}}</div>
+              </div>
+              <div class="report flex" v-if="item.reportUsers.length>0">
+                <span>汇报人：</span>
+                <el-tooltip :content="item.reportUsers.join(' ')" placement="bottom" effect="light">
+                  <span>{{item.reportUsers.join(' ')}}</span>
+                </el-tooltip>
+              </div>
+              <div class="t-name flex a-center j-between">
+                <div class="text">{{item.dynamic}}</div>
+                <div class="time">发布于{{getTime(item.date)}}</div>
+              </div>
             </div>
           </div>
-        </div>
+        </el-scrollbar>
       </div>
     </el-card>
     <el-dialog title="添加动态" :visible.sync="dialogVisible" width="650px">
@@ -207,10 +214,14 @@ export default {
 ::v-deep .el-select {
   display: block !important;
 }
-.content {
-  max-height: 440px;
+::v-deep .el-scrollbar__wrap {
   overflow-x: hidden;
-  overflow-y: scroll;
+}
+.content {
+  height: 400px;
+}
+.back {
+  background: #eee !important;
 }
 .content-item {
   background: #fafafa;
@@ -225,5 +236,9 @@ export default {
       color: #ccc;
     }
   }
+}
+.content-item:hover {
+  cursor: pointer;
+  background: #f2f3f7 !important;
 }
 </style>

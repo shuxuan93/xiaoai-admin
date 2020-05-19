@@ -18,7 +18,9 @@ export default {
             try {
                 let res = await api.calendar()
                 if (res.code === 200) {
-                    commit("setCalendar", res.data)
+                    let username = JSON.parse(localStorage.getItem('userInfo')).username
+                    let a = res.data.filter(item => item.users.includes(username))
+                    commit("setCalendar", a)
                     return true
                 } else {
                     if (res.code === 500) {
