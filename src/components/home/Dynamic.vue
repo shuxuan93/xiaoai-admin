@@ -2,8 +2,12 @@
   <div class="container">
     <el-card class="box-card">
       <div slot="header" class="clearfix flex j-between a-center">
-        <span>个人动态</span>
-        <el-button type="primary" size="small" @click="dialogVisible=true">添加动态</el-button>
+        <span>{{$t(`commons.personalDynamic`)}}</span>
+        <el-button
+          type="primary"
+          size="small"
+          @click="dialogVisible=true"
+        >{{$t(`commons.addDynamic`)}}</el-button>
       </div>
       <div class="content">
         <div>
@@ -15,7 +19,7 @@
             @change="changeData"
           ></el-date-picker>
         </div>
-        <div class="noThing" v-if="dynamicList.length===0">暂无动态</div>
+        <div class="noThing" v-if="dynamicList.length===0">{{$t(`commons.noDynamic`)}}</div>
         <div v-else>
           <div class="content-item" v-for="(item,index) in dynamicList" :key="index">
             <div class="name flex a-center j-between">

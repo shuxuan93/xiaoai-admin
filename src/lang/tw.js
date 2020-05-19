@@ -27,7 +27,11 @@ const zhTW = {
         'rate': '完成率',
         'profit': '利潤',
         'tenThousand': '萬',
-        'dear': '親愛的'
+        'dear': '親愛的',
+        'personalDynamic': '個人动态',
+        'addDynamic': '添加動態',
+        'noDynamic': '暫無動態',
+        'websiteQuestionnaireSurvey': '网詀問卷調查',
     }
 }
 

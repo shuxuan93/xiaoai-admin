@@ -30,18 +30,6 @@
               :key="index"
             >{{item}}offer ({{getStatusNum(index)}})</el-button>
           </div>
-          <div class="btn">
-            <el-button type="primary" size="mini">已发offer (25)</el-button>
-          </div>
-          <div class="btn">
-            <el-button type="primary" size="mini">已接受offer (26)</el-button>
-          </div>
-          <div class="btn">
-            <el-button type="primary" size="mini">已拒绝offer (20)</el-button>
-          </div>
-          <div class="btn">
-            <el-button type="primary" size="mini">已入职offer (15)</el-button>
-          </div>
         </div>
         <el-table
           :show-overflow-tooltip="false"

@@ -185,7 +185,7 @@ router.beforeEach((to, from, next) => {
     document.title = to.meta.title
 
     let adminToken = localStorage.getItem('adminToken')
-    if (to.path === '/login' || to.path === '/register' || to.path === '/phoneLogin')
+    if (to.path === '/login' || to.path === '/register' || to.path === '/phoneLogin' || to.path === '/findPwd')
         next()
     else {
         if (adminToken) {

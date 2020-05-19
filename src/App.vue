@@ -1,14 +1,20 @@
 <template>
   <div id="app">
-    <router-view />
+    <back-top>
+      <router-view></router-view>
+    </back-top>
   </div>
-</template><script>
+</template>
+<script>
+import BackTop from "./components/BackTop";
 export default {
   data() {
     return {};
   },
 
-  components: {},
+  components: {
+    BackTop
+  },
 
   props: {},
 

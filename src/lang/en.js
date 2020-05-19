@@ -29,7 +29,11 @@ const zh = {
         'dollar': 'Dollar',
         'profit': 'Profit',
         'tenThousand': 'Ten Thousand',
-        'dear': 'Dear'
+        'dear': 'Dear',
+        'personalDynamic': 'Personal Dynamic',
+        'addDynamic': 'Add Dynamic',
+        'noDynamic': 'No Dynamic',
+        'websiteQuestionnaireSurvey': 'Website Questionnaire Survey',
     }
 }
 

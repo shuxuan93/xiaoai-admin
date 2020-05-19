@@ -2,7 +2,7 @@
   <div class="container">
     <el-card class="box-card">
       <div slot="header" class="clearfix flex j-between a-center">
-        <span>网站问卷调查</span>
+        <span>{{$t(`commons.websiteQuestionnaireSurvey`)}}</span>
       </div>
       <div>
         <el-table
