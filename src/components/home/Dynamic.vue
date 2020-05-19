@@ -151,6 +151,7 @@ export default {
           a.date = this.datePicker;
           let flage = await this.addDynamic(a);
           if (flage) {
+            this.$refs[formName].resetFields();
             this.getDynamic();
             this.dialogVisible = false;
           }
@@ -182,6 +183,21 @@ export default {
 </script>
 
 <style scoped lang='scss'>
+/* 设置滚动条的样式 */
+::-webkit-scrollbar {
+  width: 5px;
+  background-color: rgb(236, 234, 234);
+  border-radius: 10px;
+}
+/* 滚动槽 */
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+/* 滚动条滑块 */
+::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  background: #9abde2;
+}
 ::v-deep .el-card.is-always-shadow {
   box-shadow: none;
 }
@@ -193,6 +209,8 @@ export default {
 }
 .content {
   max-height: 440px;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 .content-item {
   background: #fafafa;
