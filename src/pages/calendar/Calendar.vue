@@ -22,7 +22,7 @@
         ref="ruleForm"
         class="demo-ruleForm"
       >
-        <el-form-item prop="schedule" label="内容：" required>
+        <el-form-item prop="schedule" label="内容：">
           <el-input clearable placeholder="准备做什么..." v-model="ruleForm.schedule"></el-input>
         </el-form-item>
         <el-form-item label="时间：" required>
